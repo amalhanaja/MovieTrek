@@ -22,7 +22,7 @@ fun LoadingComponent(
 ) {
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -35,7 +35,7 @@ fun LoadingComponent(
                     style = MaterialTheme.typography.labelLarge,
                     maxLines = Constants.SINGLE_LINE,
                     overflow = TextOverflow.Clip,
-                    modifier = Modifier.testTag("loading-text")
+                    modifier = Modifier.testTag("loading-text"),
                 )
             }
         }
