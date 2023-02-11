@@ -1,4 +1,4 @@
-package com.amalhanaja.movietrek.core.designsystem.compnent
+package com.amalhanaja.movietrek.core.designsystem.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
