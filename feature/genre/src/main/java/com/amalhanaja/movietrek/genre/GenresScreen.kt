@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,6 +23,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.amalhanaja.movietrek.core.designsystem.component.ErrorComponent
 import com.amalhanaja.movietrek.core.designsystem.component.LoadingComponent
 import com.amalhanaja.movietrek.core.designsystem.spacings
 import com.amalhanaja.movietrek.core.designsystem.R as DesignResource
@@ -31,6 +35,7 @@ private const val GENRE_CARD_HEIGHT_IN_DP = 48
 internal fun GenresScreen(
     genresUiState: GenresUiState,
     onItemClick: (DisplayableGenre) -> Unit,
+    onErrorActionClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -55,6 +60,16 @@ internal fun GenresScreen(
                     .testTag("state-shown"),
                 genres = genresUiState.genres,
                 onItemClick = onItemClick,
+            )
+            is GenresUiState.Error -> ErrorComponent(
+                title = genresUiState.title,
+                actionText = stringResource(id = DesignResource.string.text_general_error_action),
+                onActionClick = onErrorActionClick,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .testTag("state-error"),
+                illustration = { Icon(Icons.Outlined.ErrorOutline, genresUiState.title, tint = MaterialTheme.colorScheme.error) }
             )
         }
     }
@@ -93,5 +108,6 @@ fun PreviewGenresScreen() {
 //    val state = GenresUiState.Shown(
 //        genres = (1..10).map { DisplayableGenre("Name $it", "$it") }
 //    )
-//    GenresScreen(genresUiState = state, onItemClick = {})
+    val state = GenresUiState.Error("Error")
+    GenresScreen(genresUiState = state, onItemClick = {}, onErrorActionClick = {})
 }

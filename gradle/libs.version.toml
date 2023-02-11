@@ -28,6 +28,7 @@ androidx-espresso = "3.5.1"
 # region compose
 compose-ui = "1.4.0-alpha05"
 compose-compiler = "1.4.0"
+compose-material = "1.4.0-beta01"
 compose-material3 = "1.1.0-alpha05"
 compose-activity = "1.6.1"
 #endregion
@@ -63,6 +64,7 @@ compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.r
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-material" }
 compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-ui" }
 compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-ui" }
 # endregion

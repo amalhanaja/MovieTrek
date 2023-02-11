@@ -3,6 +3,7 @@ package com.amalhanaja.movietrek.genre
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertAll
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onChildren
@@ -10,6 +11,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -33,11 +35,15 @@ class GenresScreenTest {
 
             // Act
             setContent {
-                GenresScreen(genresUiState = state, onItemClick = {})
+                GenresScreen(
+                    genresUiState = state,
+                    onItemClick = {},
+                    onErrorActionClick = {},
+                )
             }
 
             // Assert
-            onNodeWithTag("state-loading").assertExists()
+            onNodeWithTag("state-loading").assertIsDisplayed()
         }
     }
 
@@ -49,12 +55,16 @@ class GenresScreenTest {
 
             // Act
             setContent {
-                GenresScreen(genresUiState = state, onItemClick = {})
+                GenresScreen(
+                    genresUiState = state,
+                    onItemClick = {},
+                    onErrorActionClick = {},
+                )
             }
 
             // Assert
             onNodeWithTag("state-shown")
-                .assertExists()
+                .assertIsDisplayed()
                 .onChildren()
                 .assertAll(hasClickAction())
                 .assertCountEquals(4)
@@ -68,7 +78,11 @@ class GenresScreenTest {
         with(composeTestRule) {
             val state = GenresUiState.Shown(genres)
             setContent {
-                GenresScreen(genresUiState = state, onItemClick = { selectedItem = it })
+                GenresScreen(
+                    genresUiState = state,
+                    onItemClick = { selectedItem = it },
+                    onErrorActionClick = {},
+                )
             }
 
             // Act
@@ -76,6 +90,52 @@ class GenresScreenTest {
 
             // Assert
             assertEquals(DisplayableGenre(2, "Comedy"), selectedItem)
+        }
+    }
+
+    @Test
+    fun testErrorState_shouldShowErrorStateComponent() {
+        // Arrange
+        with(composeTestRule) {
+            val state = GenresUiState.Error("Error")
+
+            // Act
+            setContent {
+                GenresScreen(
+                    genresUiState = state,
+                    onItemClick = {},
+                    onErrorActionClick = {},
+                )
+            }
+
+            // Assert
+            onNodeWithTag("state-error").assertIsDisplayed()
+            onNodeWithText("Error").assertIsDisplayed()
+        }
+    }
+
+    @Test
+    fun testWhenErrorAndClickAction_shouldTriggerOnErrorActionClick() {
+        // Arrange
+        var isClicked = false
+        with(composeTestRule) {
+            val state = GenresUiState.Error("Error")
+            setContent {
+                GenresScreen(
+                    genresUiState = state,
+                    onItemClick = {},
+                    onErrorActionClick = { isClicked = true },
+                )
+            }
+
+            // Act
+            onNodeWithText(
+                composeTestRule.activity.getString(com.amalhanaja.movietrek.core.designsystem.R.string.text_general_error_action)
+            ).performClick()
+
+
+            // Assert
+            assertTrue(isClicked)
         }
     }
 }
