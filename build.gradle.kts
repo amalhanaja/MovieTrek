@@ -17,12 +17,13 @@ subprojects {
 
             // Enable experimental coroutines APIs, including Flow
             freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
 
             // Set JVM target to 11
             jvmTarget = JavaVersion.VERSION_11.toString()
         }
     }
-    tasks.withType<JavaCompile>() {
+    tasks.withType<JavaCompile> {
         targetCompatibility = JavaVersion.VERSION_11.toString()
         sourceCompatibility = JavaVersion.VERSION_11.toString()
     }
@@ -32,7 +33,7 @@ subprojects {
 }
 
 fun Project.setupAndroid() {
-    extensions.configure<BaseExtension>() {
+    extensions.configure<BaseExtension> {
         compileSdkVersion(libs.versions.compileSdk.get().toInt())
         defaultConfig {
             minSdk = libs.versions.minSdk.get().toInt()

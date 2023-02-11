@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "MovieTrek"
 include(":app")
 include(":core:designsystem")
+include(":feature:genre")
