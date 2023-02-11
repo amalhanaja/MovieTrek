@@ -1,4 +1,4 @@
-package com.amalhanaja.movietrek.core.designsystem
+package com.amalhanaja.movietrek.core.designsystem.foundation
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -8,6 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
+import com.amalhanaja.movietrek.core.designsystem.DarkColorScheme
+import com.amalhanaja.movietrek.core.designsystem.LightColorScheme
+import com.amalhanaja.movietrek.core.designsystem.MovieTrekTheme
+import com.amalhanaja.movietrek.core.designsystem.Spacings
+import com.amalhanaja.movietrek.core.designsystem.isSupportDynamicTheme
+import com.amalhanaja.movietrek.core.designsystem.spacings
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
