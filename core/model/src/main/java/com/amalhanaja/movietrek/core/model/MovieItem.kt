@@ -1,6 +1,6 @@
 package com.amalhanaja.movietrek.core.model
 
-class MovieItem(
+data class MovieItem(
     val id: Int,
     val posterUrl: String,
     val title: String,

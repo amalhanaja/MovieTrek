@@ -3,7 +3,7 @@ package com.amalhanaja.movietrek.core.model
 import kotlinx.datetime.LocalDate
 import kotlin.time.Duration
 
-class MovieDetail(
+data class MovieDetail(
     val id: Int,
     val backdropUrl: String,
     val posterUrl: String,
