@@ -37,7 +37,7 @@ class GenresScreenTest {
             setContent {
                 GenresScreen(
                     genresUiState = state,
-                    onItemClick = {},
+                    onGenreClick = {},
                     onErrorActionClick = {},
                 )
             }
@@ -57,7 +57,7 @@ class GenresScreenTest {
             setContent {
                 GenresScreen(
                     genresUiState = state,
-                    onItemClick = {},
+                    onGenreClick = {},
                     onErrorActionClick = {},
                 )
             }
@@ -80,7 +80,7 @@ class GenresScreenTest {
             setContent {
                 GenresScreen(
                     genresUiState = state,
-                    onItemClick = { selectedItem = it },
+                    onGenreClick = { selectedItem = it },
                     onErrorActionClick = {},
                 )
             }
@@ -103,7 +103,7 @@ class GenresScreenTest {
             setContent {
                 GenresScreen(
                     genresUiState = state,
-                    onItemClick = {},
+                    onGenreClick = {},
                     onErrorActionClick = {},
                 )
             }
@@ -123,7 +123,7 @@ class GenresScreenTest {
             setContent {
                 GenresScreen(
                     genresUiState = state,
-                    onItemClick = {},
+                    onGenreClick = {},
                     onErrorActionClick = { isClicked = true },
                 )
             }
