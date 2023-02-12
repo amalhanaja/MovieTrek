@@ -10,6 +10,7 @@ agp = "7.4.1"
 kotlin = "1.8.0"
 ksp = "1.7.10-1.0.6"
 coroutine = "1.6.4"
+kotlinx-datetime = '0.4.0'
 #endregion
 
 # region testing
@@ -53,9 +54,10 @@ androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-j
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
 # endregion
 
-# region coroutine
+# region kotlin
 coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine" }
 coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutine" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 # endregion
 
 # region compose
