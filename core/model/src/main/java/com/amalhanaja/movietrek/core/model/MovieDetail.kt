@@ -8,7 +8,7 @@ class MovieDetail(
     val backdropUrl: String,
     val title: String,
     val genres: List<Genre>,
-    val publishedAt: LocalDate,
+    val releaseDate: LocalDate,
     val duration: Duration,
     val rating: Float,
     val overview: String,
