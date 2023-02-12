@@ -6,10 +6,8 @@ import com.amalhanaja.movietrek.core.tmdb.exception.TmdbException
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -29,6 +27,7 @@ class GenresViewModelTest {
 
     @Before
     fun setUp() {
+        sut = GenresViewModel(dataRepository)
         Dispatchers.setMain(testDispatcher)
     }
 
@@ -39,10 +38,6 @@ class GenresViewModelTest {
 
     @Test
     fun genresUiState_whenInitialized_thenShowLoading() = runTest {
-        // Arrange
-        coEvery { dataRepository.getMovieGenres(Locale.getDefault()) } returns flowOf()
-        sut = GenresViewModel(dataRepository)
-
         // Act
         val result = sut.genresUiState.value
 
@@ -51,37 +46,28 @@ class GenresViewModelTest {
     }
 
     @Test
-    fun genresUiState_whenError_thenShowError() = runTest(testDispatcher) {
+    fun fetch_whenError_thenGenresUiStateError() = runTest(testDispatcher) {
         // Arrange
         coEvery { dataRepository.getMovieGenres(Locale.getDefault()) } returns flow {
             throw TmdbException("123", "Error", null)
         }
-        sut = GenresViewModel(dataRepository)
-        val collectJob = launch(testDispatcher) { sut.genresUiState.collect() }
 
         // Act
-        val result = sut.genresUiState.value
+        sut.fetch()
 
-        assertTrue(result is GenresUiState.Error)
-
-        // Tear Down
-        collectJob.cancel()
+        // Assert
+        assertTrue(sut.genresUiState.value is GenresUiState.Error)
     }
 
     @Test
     fun genresUiState_whenSuccess_thenShown() = runTest {
         // Arrange
         coEvery { dataRepository.getMovieGenres(any()) } returns flowOf(listOf(Genre(1, "Action")))
-        sut = GenresViewModel(dataRepository)
-        val collectJob = launch(testDispatcher) { sut.genresUiState.collect() }
 
         // Act
-        val result = sut.genresUiState.value
+        sut.fetch()
 
         // Assert
-        assertTrue(result is GenresUiState.Shown)
-
-        // Tear Down
-        collectJob.cancel()
+        assertTrue(sut.genresUiState.value is GenresUiState.Shown)
     }
 }

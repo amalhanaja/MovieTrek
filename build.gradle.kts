@@ -20,6 +20,7 @@ subprojects {
             // Enable experimental coroutines APIs, including Flow
             freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
             freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+            freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
 
             // Set JVM target to 11
             jvmTarget = JavaVersion.VERSION_11.toString()

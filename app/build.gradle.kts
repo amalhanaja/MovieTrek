@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 fun generateVersionCode(minSdk: Int, major: Int, minor: Int, patch: Int): Int {
@@ -53,13 +55,17 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":feature:genre"))
+    implementation(project(":core:designsystem"))
     implementation(libs.androidx.core)
-    implementation(libs.lifecycle.runtime)
     implementation(libs.compose.activity)
     implementation(libs.compose.ui)
     implementation(libs.compose.preview)
     implementation(libs.compose.material3)
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

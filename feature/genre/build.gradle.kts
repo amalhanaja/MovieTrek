@@ -27,8 +27,11 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.coroutine.core)
     implementation(libs.hilt.android)
+    implementation(libs.hilt.compose.nav)
     implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.compose)
     kapt(libs.hilt.compiler)
+    implementation(libs.accompanist.navigation.animation)
 
     testImplementation(libs.junit)
     testImplementation(libs.coroutine.test)

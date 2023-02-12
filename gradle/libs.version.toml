@@ -23,7 +23,7 @@ mockk = "1.13.4"
 junit = "4.13.2"
 # endregion
 
-lifecycle = '2.5.1'
+lifecycle = '2.6.0-alpha03'
 
 # region androidx
 androidx-core = "1.9.0"
@@ -45,14 +45,20 @@ gson = "2.10.1"
 okhttp = "4.10.0"
 # endregion
 
+# region accompanist
+accompanist = "0.29.1-alpha"
+# endregion
+
 [libraries]
 # region testing
 junit = { module = "junit:junit", version.ref = "junit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 # endregion
 
-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+# region lifecycle
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+# endregion
 
 # region androidx
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
@@ -90,6 +96,10 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-compose-nav = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-compose-nav" }
 hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
+# endregion
+
+# region accompanist
+accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 # endregion
 
 [plugins]
