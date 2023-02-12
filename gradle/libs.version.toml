@@ -24,6 +24,8 @@ junit = "4.13.2"
 # endregion
 
 lifecycle = '2.6.0-alpha03'
+paging = "3.2.0-alpha04"
+paging-compose = "1.0.0-alpha18"
 
 # region androidx
 androidx-core = "1.9.0"
@@ -48,6 +50,8 @@ okhttp = "4.10.0"
 # region accompanist
 accompanist = "0.29.1-alpha"
 # endregion
+
+coil = "2.2.2"
 
 [libraries]
 # region testing
@@ -98,9 +102,17 @@ hilt-compose-nav = { module = "androidx.hilt:hilt-navigation-compose", version.r
 hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 # endregion
 
+# region paging
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
+paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose" }
+# endregion
+
 # region accompanist
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 # endregion
+
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -55,8 +55,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:genre"))
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:genre"))
+    implementation(project(":feature:discovermovie"))
     implementation(libs.androidx.core)
     implementation(libs.compose.activity)
     implementation(libs.compose.ui)

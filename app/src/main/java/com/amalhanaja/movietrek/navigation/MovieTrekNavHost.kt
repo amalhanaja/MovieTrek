@@ -3,6 +3,8 @@ package com.amalhanaja.movietrek.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.amalhanaja.movietrek.discovermovie.navigation.discoverMovieScreen
+import com.amalhanaja.movietrek.discovermovie.navigation.goToDiscoverMovie
 import com.amalhanaja.movietrek.genre.navigation.genresScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 
@@ -17,7 +19,8 @@ fun MovieTrekNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        genresScreen(onGenreClick = {})
+        genresScreen(onGenreClick = { navController.goToDiscoverMovie(it.id, it.name) })
+        discoverMovieScreen(onBack = { navController.popBackStack() })
     }
 
 }
