@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface TmdbService {
+internal interface TmdbService {
 
     @GET("3/genre/movie/list")
     suspend fun getMovieGenres(
