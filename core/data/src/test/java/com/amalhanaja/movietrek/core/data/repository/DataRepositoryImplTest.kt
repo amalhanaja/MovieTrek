@@ -14,6 +14,7 @@ import com.amalhanaja.movietrek.core.tmdb.response.VideoResponse
 import com.amalhanaja.movietrek.core.tmdb.response.VideosResponse
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -37,7 +38,7 @@ class DataRepositoryImplTest {
         coEvery { tmdbClient.getMovieGenres(Locale("in")) } returns response
 
         // Act
-        val result = sut.getMovieGenres(Locale("in"))
+        val result = sut.getMovieGenres(Locale("in")).first()
 
         // Assert
         assertEquals(response.map { it.toGenre() }, result)
@@ -56,7 +57,7 @@ class DataRepositoryImplTest {
         coEvery { tmdbClient.discoverMovie(Locale("in"), listOf(1, 2, 3), 1) } returns response
 
         // Act
-        val result = sut.discoverMovie(Locale("in"), listOf(1, 2, 3), 1)
+        val result = sut.discoverMovie(Locale("in"), listOf(1, 2, 3), 1).first()
 
         // Assert
         assertEquals(response.map { it.toMovieItem() }, result)
@@ -82,7 +83,7 @@ class DataRepositoryImplTest {
         coEvery { tmdbClient.getMovieDetail(Locale("in"), 1) } returns response
 
         // Act
-        val result = sut.getMovieDetail(Locale("in"), 1)
+        val result = sut.getMovieDetail(Locale("in"), 1).first()
 
         // Assert
         assertEquals(response.toMovieDetail(), result)
@@ -104,7 +105,7 @@ class DataRepositoryImplTest {
         coEvery { tmdbClient.getMovieReviews(Locale("in"), 2, 1) } returns response
 
         // Act
-        val result = sut.getMovieReviews(Locale("in"), 2, 1)
+        val result = sut.getMovieReviews(Locale("in"), 2, 1).first()
 
         // Assert
         assertEquals(response.map { it.toReview() }, result)

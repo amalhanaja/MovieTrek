@@ -4,15 +4,16 @@ import com.amalhanaja.movietrek.core.model.Genre
 import com.amalhanaja.movietrek.core.model.MovieDetail
 import com.amalhanaja.movietrek.core.model.MovieItem
 import com.amalhanaja.movietrek.core.model.Review
+import kotlinx.coroutines.flow.Flow
 import java.util.Locale
 
 interface DataRepository {
 
-    suspend fun getMovieGenres(locale: Locale): List<Genre>
+    fun getMovieGenres(locale: Locale): Flow<List<Genre>>
 
-    suspend fun discoverMovie(locale: Locale, genreIds: List<Int>, page: Int): List<MovieItem>
+    fun discoverMovie(locale: Locale, genreIds: List<Int>, page: Int): Flow<List<MovieItem>>
 
-    suspend fun getMovieDetail(locale: Locale, id: Int): MovieDetail
+    fun getMovieDetail(locale: Locale, id: Int): Flow<MovieDetail>
 
-    suspend fun getMovieReviews(locale: Locale, id: Int, page: Int): List<Review>
+    fun getMovieReviews(locale: Locale, id: Int, page: Int): Flow<List<Review>>
 }

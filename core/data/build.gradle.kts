@@ -13,8 +13,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:tmdb"))
-    implementation(project(":core:model"))
+    api(project(":core:tmdb"))
+    api(project(":core:model"))
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
