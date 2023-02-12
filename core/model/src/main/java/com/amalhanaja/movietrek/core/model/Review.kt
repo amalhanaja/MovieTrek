@@ -1,6 +1,6 @@
 package com.amalhanaja.movietrek.core.model
 
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 data class Review(
     val author: String,
