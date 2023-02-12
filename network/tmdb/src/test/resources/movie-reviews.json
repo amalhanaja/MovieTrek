@@ -1,0 +1,22 @@
+{
+  "id": 505642,
+  "page": 1,
+  "results": [
+    {
+      "author": "r96sk",
+      "author_details": {
+        "name": "r96sk name",
+        "username": "r96sk",
+        "avatar_path": "/https://www.gravatar.com/avatar/96c2e0e4ac98450f9e8e3c0a0a40aad8.jpg",
+        "rating": 8
+      },
+      "content": "Review content",
+      "created_at": "2023-01-05T16:56:56.269Z",
+      "id": "63b7015843250f0082e8cd69",
+      "updated_at": "2023-01-05T16:56:56.369Z",
+      "url": "https://www.themoviedb.org/review/63b7015843250f0082e8cd69"
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 6
+}

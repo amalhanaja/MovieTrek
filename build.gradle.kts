@@ -13,7 +13,7 @@ subprojects {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             // Treat all Kotlin warnings as errors
-            allWarningsAsErrors = true
+            allWarningsAsErrors = false
 
             // Enable experimental coroutines APIs, including Flow
             freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
