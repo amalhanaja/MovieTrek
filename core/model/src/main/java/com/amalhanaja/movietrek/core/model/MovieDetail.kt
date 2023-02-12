@@ -13,5 +13,4 @@ class MovieDetail(
     val rating: Float,
     val overview: String,
     val videos: List<Video>,
-
-    )
+)
