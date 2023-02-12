@@ -2,10 +2,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
+
 android {
-    namespace = "com.amalhanaja.movietrek.core.designsystem"
+    namespace = "com.amalhanaja.movietrek.discovermovie"
     defaultConfig {
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -21,15 +24,20 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:data"))
     implementation(libs.androidx.core)
-    api(libs.compose.ui)
-    api(libs.compose.preview)
-    api(libs.compose.material3)
-    api(libs.compose.material.icons)
-    debugApi(libs.compose.tooling)
-    debugApi(libs.compose.test.manifest)
+    implementation(libs.coroutine.core)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.compose.nav)
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.compose)
+    kapt(libs.hilt.compiler)
+    implementation(libs.accompanist.navigation.animation)
 
     testImplementation(libs.junit)
+    testImplementation(libs.coroutine.test)
+    testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.compose.test.junit)
