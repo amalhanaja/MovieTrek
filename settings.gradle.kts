@@ -26,5 +26,6 @@ rootProject.name = "MovieTrek"
 include(":app")
 include(":core:designsystem")
 include(":feature:genre")
-include(":network:tmdb")
+include(":core:tmdb")
 include(":core:model")
+include(":core:data")
