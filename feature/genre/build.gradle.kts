@@ -1,6 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -20,10 +22,17 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core)
     implementation(project(":core:designsystem"))
+    implementation(project(":core:data"))
+    implementation(libs.androidx.core)
+    implementation(libs.coroutine.core)
+    implementation(libs.hilt.android)
+    implementation(libs.lifecycle.viewmodel)
+    kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.coroutine.test)
+    testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.compose.test.junit)
