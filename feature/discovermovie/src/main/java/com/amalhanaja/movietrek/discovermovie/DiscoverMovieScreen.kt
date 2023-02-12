@@ -159,8 +159,9 @@ internal fun DiscoverMovieScreen(
                         item {
                             LoadingComponent(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .testTag("state-item-loading"),
+                                    .fillMaxWidth()
+                                    .testTag("state-item-loading")
+                                    .padding(horizontal = MaterialTheme.spacings.s, vertical = MaterialTheme.spacings.giant),
                                 text = stringResource(id = DesignResource.string.text_default_loading),
                             )
                         }
@@ -172,8 +173,8 @@ internal fun DiscoverMovieScreen(
                                 actionText = stringResource(id = DesignResource.string.text_general_error_action),
                                 onActionClick = { onRetry() },
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(paddingValues)
+                                    .fillMaxWidth()
+                                    .padding(horizontal = MaterialTheme.spacings.s, vertical = MaterialTheme.spacings.jumbo)
                                     .testTag("state-item-error"),
                                 illustration = {
                                     Icon(Icons.Outlined.ErrorOutline, discoverMovieUiState.message, tint = MaterialTheme.colorScheme.error)
