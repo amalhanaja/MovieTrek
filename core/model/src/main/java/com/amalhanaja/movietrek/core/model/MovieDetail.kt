@@ -6,6 +6,7 @@ import kotlin.time.Duration
 class MovieDetail(
     val id: Int,
     val backdropUrl: String,
+    val posterUrl: String,
     val title: String,
     val genres: List<Genre>,
     val releaseDate: LocalDate,
