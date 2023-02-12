@@ -1,6 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -11,5 +13,12 @@ android {
 }
 
 dependencies {
-//    implementation(project(":network:tmdb"))
+    implementation(project(":core:tmdb"))
+    implementation(project(":core:model"))
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutine.test)
 }
