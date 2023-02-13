@@ -1,5 +1,6 @@
 package com.amalhanaja.movietrek.core.data.repository
 
+import androidx.paging.PagingData
 import com.amalhanaja.movietrek.core.model.Genre
 import com.amalhanaja.movietrek.core.model.MovieDetail
 import com.amalhanaja.movietrek.core.model.MovieItem
@@ -15,5 +16,5 @@ interface DataRepository {
 
     fun getMovieDetail(locale: Locale, id: Int): Flow<MovieDetail>
 
-    fun getMovieReviews(locale: Locale, id: Int, page: Int): Flow<List<Review>>
+    fun getMovieReviews(locale: Locale, id: Int): Flow<PagingData<Review>>
 }

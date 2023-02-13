@@ -1,5 +1,7 @@
 package com.amalhanaja.movietrek.detail
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIos
 import androidx.compose.material.icons.outlined.ErrorOutline
@@ -33,8 +38,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.amalhanaja.movietrek.core.designsystem.R
@@ -44,6 +54,7 @@ import com.amalhanaja.movietrek.core.designsystem.component.RatingBarComponent
 import com.amalhanaja.movietrek.core.designsystem.component.YoutubePlayerComponent
 import com.amalhanaja.movietrek.core.designsystem.spacings
 import com.amalhanaja.movietrek.core.model.MovieDetail
+import com.amalhanaja.movietrek.core.model.Review
 import java.util.Locale
 
 private const val RATING_DIVIDER = 2
@@ -56,14 +67,16 @@ fun MovieDetailRoute(
     onBack: () -> Unit,
 ) {
     val movieDetailUiState by movieDetailViewModel.movieDetailUiState.collectAsStateWithLifecycle()
+    val reviews = movieDetailViewModel.reviews.collectAsLazyPagingItems()
     LaunchedEffect(key1 = Unit) {
         movieDetailViewModel.fetch(Locale.getDefault(), id)
     }
     MovieDetailScreen(
         title = title,
         movieDetailUiState = movieDetailUiState,
+        reviews = reviews,
         onRetryGetDetail = { movieDetailViewModel.fetch(Locale.getDefault(), id) },
-        onBack = onBack
+        onBack = onBack,
     )
 }
 
@@ -71,6 +84,7 @@ fun MovieDetailRoute(
 fun MovieDetailScreen(
     title: String,
     movieDetailUiState: MovieDetailUiState,
+    reviews: LazyPagingItems<Review>,
     onRetryGetDetail: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -165,9 +179,108 @@ fun MovieDetailScreen(
                             }
                         }
                     }
+                    item {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = MaterialTheme.spacings.xxl, vertical = MaterialTheme.spacings.l),
+                            text = "Reviews",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    }
+                    itemsIndexed(items = reviews) { index, review ->
+                        if (index != 0) {
+                            Spacer(modifier = Modifier.height(MaterialTheme.spacings.l))
+                        }
+                        ReviewItem(review = review, modifier = Modifier.padding(horizontal = MaterialTheme.spacings.xxl))
+                    }
+                    if (reviews.itemCount == 0 && reviews.loadState.refresh is LoadState.NotLoading) {
+                        item {
+                            Text(
+                                text = "We don't have any reviews for $title",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = MaterialTheme.spacings.xxl),
+                            )
+                        }
+                    }
+                    reviewLoadingErrorComponent(loadState = reviews.loadState.refresh, onTryAgain = { reviews.refresh() })
+                    reviewLoadingErrorComponent(loadState = reviews.loadState.append, onTryAgain = { reviews.retry() })
+                    item { Spacer(modifier = Modifier.height(MaterialTheme.spacings.xxl)) }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun ReviewItem(review: Review?, modifier: Modifier = Modifier) {
+    if (review == null) return
+    Column(modifier = modifier) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = review.author.firstOrNull()?.toString().orEmpty(),
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+            }
+            Spacer(modifier = Modifier.width(MaterialTheme.spacings.l))
+            Text(text = review.author, modifier = Modifier.weight(1f))
+        }
+        Spacer(modifier = Modifier.height(MaterialTheme.spacings.s))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RatingBarComponent(rating = review.rating.div(RATING_DIVIDER))
+            Spacer(modifier = Modifier.width(MaterialTheme.spacings.l))
+            Text(text = review.timestamp.toString(), style = MaterialTheme.typography.bodySmall)
+        }
+        Spacer(modifier = Modifier.height(MaterialTheme.spacings.s))
+        Text(
+            text = review.content,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+private fun LazyListScope.reviewLoadingErrorComponent(loadState: LoadState, onTryAgain: () -> Unit) {
+    when (loadState) {
+        is LoadState.Error -> item {
+            ErrorComponent(
+                title = loadState.error.message.orEmpty(),
+                actionText = stringResource(id = R.string.text_general_error_action),
+                onActionClick = onTryAgain,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacings.l)
+                    .testTag("state-review-error"),
+                illustration = {
+                    Icon(Icons.Outlined.ErrorOutline, loadState.error.message, tint = MaterialTheme.colorScheme.error)
+                }
+            )
+        }
+        is LoadState.Loading -> item {
+            LoadingComponent(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacings.l)
+                    .testTag("state-review-loading"),
+                text = stringResource(id = R.string.text_default_loading),
+            )
+        }
+        else -> Unit
     }
 }
 

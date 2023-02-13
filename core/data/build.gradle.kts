@@ -18,7 +18,9 @@ dependencies {
     api(project(":core:model"))
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    implementation(libs.paging.runtime)
 
+    testImplementation(libs.paging.common)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.coroutine.test)

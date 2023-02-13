@@ -9,7 +9,7 @@ data class AuthorDetailResponse(
     @SerializedName(value = "name")
     val name: String? = null,
     @SerializedName(value = "rating")
-    val rating: Int? = null,
+    val rating: Float? = null,
     @SerializedName(value = "username")
     val username: String? = null,
 )

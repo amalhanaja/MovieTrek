@@ -16,7 +16,7 @@ class ReviewTest {
         val response = ReviewResponse(
             author = "Alfian",
             authorDetails = AuthorDetailResponse(
-                rating = 9,
+                rating = 9f,
                 avatarPath = "/avatarPath",
             ),
             updatedAt = "2023-01-05T16:56:56.369Z",
@@ -40,7 +40,7 @@ class ReviewTest {
         val response = ReviewResponse(
             author = "Alfian",
             authorDetails = AuthorDetailResponse(
-                rating = 9,
+                rating = 9f,
             ),
             updatedAt = "2023-01-05T16:56:56.369Z",
             content = "Content",

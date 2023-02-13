@@ -2,12 +2,17 @@ package com.amalhanaja.movietrek.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.amalhanaja.movietrek.core.data.repository.DataRepository
 import com.amalhanaja.movietrek.core.model.MovieDetail
+import com.amalhanaja.movietrek.core.model.Review
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +31,7 @@ class MovieDetailViewModel @Inject constructor(
     private val params: MutableStateFlow<Params?> = MutableStateFlow(null)
     private val _movieDetailUiState: MutableStateFlow<MovieDetailUiState> = MutableStateFlow(MovieDetailUiState.Loading)
     val movieDetailUiState: StateFlow<MovieDetailUiState> = _movieDetailUiState
+    val reviews: Flow<PagingData<Review>> = params.filterNotNull().flatMapLatest { dataRepository.getMovieReviews(it.locale, it.id) }
 
     fun fetch(locale: Locale, id: Int) {
         params.updateAndGet { Params(locale, id) }?.let(::getMovieDetail)

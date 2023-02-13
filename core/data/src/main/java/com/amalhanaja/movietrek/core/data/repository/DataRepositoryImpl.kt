@@ -1,9 +1,12 @@
 package com.amalhanaja.movietrek.core.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.amalhanaja.movietrek.core.data.model.toGenre
 import com.amalhanaja.movietrek.core.data.model.toMovieDetail
 import com.amalhanaja.movietrek.core.data.model.toMovieItem
-import com.amalhanaja.movietrek.core.data.model.toReview
+import com.amalhanaja.movietrek.core.data.source.ReviewsPagingSource
 import com.amalhanaja.movietrek.core.model.Genre
 import com.amalhanaja.movietrek.core.model.MovieDetail
 import com.amalhanaja.movietrek.core.model.MovieItem
@@ -25,8 +28,12 @@ class DataRepositoryImpl constructor(
         emit(tmdbClient.getMovieDetail(locale, id).toMovieDetail())
     }
 
-    override fun getMovieReviews(locale: Locale, id: Int, page: Int): Flow<List<Review>> = flow {
-        emit(tmdbClient.getMovieReviews(locale, id, page).map { it.toReview() })
+    override fun getMovieReviews(locale: Locale, id: Int): Flow<PagingData<Review>> {
+        return Pager(
+            config = PagingConfig(20),
+        ) {
+            ReviewsPagingSource(tmdbClient, locale, id)
+        }.flow
     }
 
     override fun getMovieGenres(locale: Locale): Flow<List<Genre>> = flow {
