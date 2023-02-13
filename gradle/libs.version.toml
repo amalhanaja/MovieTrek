@@ -52,6 +52,7 @@ accompanist = "0.29.1-alpha"
 # endregion
 
 coil = "2.2.2"
+ayp = "11.1.0"
 
 [libraries]
 # region testing
@@ -113,6 +114,7 @@ accompanist-navigation-animation = { module = "com.google.accompanist:accompanis
 # endregion
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+ayp = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "ayp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.amalhanaja.movietrek.core.model.MovieItem
 import com.amalhanaja.movietrek.discovermovie.DiscoverMovieRoute
 import com.google.accompanist.navigation.animation.composable
 
@@ -15,7 +16,7 @@ fun NavController.goToDiscoverMovie(
     navigate("genres/$genreId?name=$genre")
 }
 
-fun NavGraphBuilder.discoverMovieScreen(onBack: () -> Unit) {
+fun NavGraphBuilder.discoverMovieScreen(onBack: () -> Unit, onMovieClick: (MovieItem) -> Unit) {
     composable(
         route = "genres/{id}?name={name}",
         arguments = listOf(
@@ -27,7 +28,8 @@ fun NavGraphBuilder.discoverMovieScreen(onBack: () -> Unit) {
             discoverMovieViewModel = hiltViewModel(),
             genre = requireNotNull(backStackEntry.arguments?.getString("name")),
             genreId = requireNotNull(backStackEntry.arguments?.getInt("id")),
-            onBack = onBack
+            onBack = onBack,
+            onMovieClick = onMovieClick,
         )
     }
 }

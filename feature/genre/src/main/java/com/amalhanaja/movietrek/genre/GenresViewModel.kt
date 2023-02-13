@@ -1,6 +1,5 @@
 package com.amalhanaja.movietrek.genre
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amalhanaja.movietrek.core.data.repository.DataRepository
@@ -25,7 +24,6 @@ class GenresViewModel @Inject constructor(
     val genresUiState: StateFlow<GenresUiState> = _genresUiState
 
     fun fetch() {
-        Log.d("ALFIAN", "FETCH")
         dataRepository.getMovieGenres(Locale.getDefault())
             .map<List<Genre>, GenresUiState> { list -> GenresUiState.Shown(list.map { it.toDisplayableGenre() }) }
             .catch { emit(GenresUiState.Error(it.message.orEmpty())) }

@@ -7,4 +7,5 @@ internal fun VideoResponse.toVideo(): Video = Video(
     videoUrl = "https://www.youtube.com/watch?v=$key",
     thumbnailUrl = "https://img.youtube.com/vi/$key/0.jpg",
     title = name.orEmpty(),
+    videoId = key.orEmpty(),
 )

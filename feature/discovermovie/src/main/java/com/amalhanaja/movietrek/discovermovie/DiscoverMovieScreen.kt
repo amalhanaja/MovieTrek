@@ -1,5 +1,6 @@
 package com.amalhanaja.movietrek.discovermovie
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -50,6 +51,7 @@ internal fun DiscoverMovieRoute(
     genreId: Int,
     discoverMovieViewModel: DiscoverMovieViewModel,
     onBack: () -> Unit,
+    onMovieClick: (MovieItem) -> Unit,
 ) {
     val discoverMovieUiState by discoverMovieViewModel.discoverMovieUiState.collectAsStateWithLifecycle()
 
@@ -59,7 +61,8 @@ internal fun DiscoverMovieRoute(
         movieItems = discoverMovieViewModel.movieItems,
         onLoad = { discoverMovieViewModel.load(Locale.getDefault(), listOf(genreId)) },
         onRetry = discoverMovieViewModel::retry,
-        onBack = onBack
+        onBack = onBack,
+        onMovieClick = onMovieClick,
     )
 }
 
@@ -71,6 +74,7 @@ internal fun DiscoverMovieScreen(
     onLoad: () -> Unit,
     onRetry: () -> Unit,
     onBack: () -> Unit,
+    onMovieClick: (MovieItem) -> Unit,
     lazyGridState: LazyGridState = rememberLazyGridState(),
 ) {
 
@@ -138,6 +142,7 @@ internal fun DiscoverMovieScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(MaterialTheme.spacings.s)
+                                .clickable { onMovieClick(item) }
                         ) {
                             AsyncImage(
                                 modifier = Modifier
