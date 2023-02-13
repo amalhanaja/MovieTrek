@@ -8,6 +8,9 @@ plugins {
 
 android {
     namespace = "com.amalhanaja.movietrek.core.data"
+    defaultConfig {
+        buildConfigField("String", "API_KEY", "\"99412b15adcfe59f3effe464bcca15b4\"")
+    }
     lint {
         checkDependencies = true
     }

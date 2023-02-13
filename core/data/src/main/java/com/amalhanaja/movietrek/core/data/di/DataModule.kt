@@ -1,5 +1,6 @@
 package com.amalhanaja.movietrek.core.data.di
 
+import com.amalhanaja.movietrek.core.data.BuildConfig
 import com.amalhanaja.movietrek.core.data.repository.DataRepository
 import com.amalhanaja.movietrek.core.data.repository.DataRepositoryImpl
 import com.amalhanaja.movietrek.core.tmdb.TmdbClient
@@ -22,7 +23,7 @@ class DataModule {
 
     @Provides
     fun proveTmdbClient(@CoroutineContextIO coroutineContext: CoroutineContext): TmdbClient {
-        return TmdbClient(coroutineContext, "API_KEY")
+        return TmdbClient(coroutineContext, BuildConfig.API_KEY)
     }
 
     @Provides
